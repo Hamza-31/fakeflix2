@@ -1,7 +1,9 @@
 <template>
   <div class="hello">
     <header>
-      <nav><input type="text" v-model="query" @keyup.enter="fetchMovie" /></nav>
+      <nav>
+        <input id="input" type="text" @keyup.enter="getData()" />
+      </nav>
     </header>
   </div>
 </template>
@@ -9,16 +11,19 @@
 <script>
 export default {
   name: "MainHeader",
-  data: function () {
-    return {
-      query: "",
-      movies: [],
-    };
+
+  methods: {
+    getData: function () {
+      this.$store.commit(
+        "setSearchQuery",
+        document.getElementById("input").value
+      );
+      this.$store.dispatch("fetchMovies");
+    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 header {
   display: flex;
@@ -48,7 +53,8 @@ a {
 }
 nav {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 input {
   display: block;

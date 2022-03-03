@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-
 Vue.use(VueRouter)
 
 const routes = [{
@@ -13,14 +12,12 @@ const routes = [{
     {
         path: '/my-favorite',
         name: 'favorite',
-
         component: () => import('../views/FavoriteView.vue')
     },
     {
-        path: '/film/:id',
-        name: 'movie',
-
-        component: () => import('../views/FilmDetails.vue')
+        path: '/movie-details',
+        name: 'movie-details',
+        component: () => import('../views/MovieDetailsView.vue')
     }
 ]
 
@@ -30,4 +27,4 @@ const router = new VueRouter({
     routes
 })
 
-export default router;
+export default router
