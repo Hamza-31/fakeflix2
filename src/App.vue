@@ -17,15 +17,13 @@
 <script>
 import MainHeader from "@/components/MainHeader.vue";
 
-import "./css/bootstrap/bootstrap.css";
-import "./assets/style.css";
-
 export default {
   components: {
     MainHeader,
   },
 };
 </script>
+
 
 
 <style>
@@ -43,6 +41,7 @@ header {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #0c0c0c;
 }
 .logo {
   padding-top: 20px;
