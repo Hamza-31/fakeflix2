@@ -1,10 +1,8 @@
 <template>
   <div class="hello">
-    <header>
-      <nav>
-        <input id="input" type="text" @keyup.enter="getData()" />
-      </nav>
-    </header>
+    <nav>
+      <input id="input" type="text" @keyup.enter="getData()" />
+    </nav>
   </div>
 </template>
 

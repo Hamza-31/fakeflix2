@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         searchQuery: '',
         searchResults: [],
-        movieID: '',
+        movieID: 0,
+        movieTrailer: [],
         movieDetails: [],
         API_key: '338e64b8114d773d6a8d1dc0fb956525'
     },
@@ -24,24 +25,35 @@ export default new Vuex.Store({
         },
         setMovieId: function (state, id) {
             state.movieID = id
+        },
+        setMovieTrailer: function (state, trailer) {
+            state.movieTrailer = trailer
         }
     },
     actions: {
-        fetchMovies: function () {
-            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${this.state.API_key}&query=${this.state.searchQuery}`)
+        fetchMovies: function (context) {
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${context.state.API_key}&query=${context.state.searchQuery}`)
                 .then(response => response.json())
                 .then(movies => {
                     this.commit('setSearchResults', movies.results);
                 })
         },
-        fetchMovie: function () {
-            console.log(this.state.movieID)
-            fetch(`https://api.themoviedb.org/3/movie/${this.state.movieID}?api_key=${this.state.API_key}&language=en-US`)
+        fetchMovie: function (context) {
+
+
+            fetch(`https://api.themoviedb.org/3/movie/${context.state.movieID}?api_key=${context.state.API_key}&language=en-US`)
                 .then(response => response.json())
                 .then(movie => {
                     this.commit('setMovieDetails', movie);
                 })
         },
+        fetchTrailer: function (context) {
+            fetch(`https://api.themoviedb.org/3/movie/${context.state.movieID}/videos?api_key=${context.state.API_key}&language=en-US`)
+                .then(response => response.json())
+                .then(trailer => {
+                    this.commit('setMovieTrailer', trailer);
+                })
+        }
     },
     modules: {}
 })
