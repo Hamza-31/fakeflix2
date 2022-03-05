@@ -1,14 +1,23 @@
 <template>
   <section id="results-container">
-    <div class="row">
+    <div class="row" v-if="isResults()">
+      <h3 v-if="searchQuery">
+        Results for : <b>{{ searchQuery }}</b>
+      </h3>
       <div class="col" v-for="movie of searchResults" v-bind:key="movie.id">
         <router-link :to="'/movie/' + movie.id">
-          <figure>
-            <img @click="getData(movie.id)" :src="imgURL(movie.poster_path)" />
+          <figure @click="getData(movie.id)">
+            <img :src="imgURL(movie.poster_path)" />
             <figcaption>{{ movie.title }}</figcaption>
           </figure>
         </router-link>
       </div>
+    </div>
+    <div v-else>
+      <h3>
+        The are no results for the search : <b>{{ searchQuery }}</b>
+      </h3>
+      <img src="../assets/404.jpg" alt="Not found" />
     </div>
   </section>
 </template>
@@ -32,7 +41,14 @@ export default {
       this.$store.commit("setMovieTrailer", id);
       this.$store.dispatch("fetchMovie");
       this.$store.dispatch("fetchTrailer");
+      console.log(this.$store.state.searchResults.length);
       //   console.log(this.$store.state);
+    },
+    isResults: function () {
+      return this.$store.state.searchResults.length === 0 &&
+        this.$store.state.searchQuery.length !== 0
+        ? false
+        : true;
     },
   },
 };

@@ -6,12 +6,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        searchQuery: '',
+        searchQuery: null,
         searchResults: [],
         movieID: 0,
         movieTrailer: [],
         movieDetails: [],
-        API_key: '338e64b8114d773d6a8d1dc0fb956525'
+        API_key: '338e64b8114d773d6a8d1dc0fb956525',
+        latestMovies: []
     },
     getters: {},
     mutations: {
@@ -29,6 +30,10 @@ export default new Vuex.Store({
         },
         setMovieTrailer: function (state, trailer) {
             state.movieTrailer = trailer
+        },
+        setLatestMovies: function (state, listMovies) {
+            state.latestMovies = listMovies
+
         }
     },
     actions: {
@@ -53,6 +58,13 @@ export default new Vuex.Store({
                 .then(response => response.json())
                 .then(trailer => {
                     this.commit('setMovieTrailer', trailer);
+                })
+        },
+        fetchLatestMovies: function (context) {
+            fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${context.state.API_key}&language=en-US`)
+                .then(response => response.json())
+                .then(latestMovies => {
+                    this.commit('setLatestMovies', latestMovies);
                 })
         }
     },

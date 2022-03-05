@@ -14,17 +14,32 @@
       </div>
     </div>
     <div class="row">
-      <figure class="col-6">
+      <figure class="col-4">
         <img :src="imgURL(movieDetails.poster_path)" />
         <figcaption>{{ movieDetails.original_title }}</figcaption>
       </figure>
-      <article class="col-6">
+      <article class="col-8">
         <h2>{{ movieDetails.original_title }}</h2>
-        <p>{{ movieDetails.overview }}</p>
-        <time :datetime="movieDetails.release_date">{{
-          movieDetails.release_date
-        }}</time>
+        <small>
+          <time :datetime="movieDetails.release_date">
+            {{ movieDetails.original_title }}: ({{
+              movieDetails.original_language
+            }}) - Released: {{ movieDetails.release_date | toDate }}</time
+          >
+        </small>
+        <p class="py-4">{{ movieDetails.overview }}</p>
+
+        <h3>Infos</h3>
+        <ul>
+          <li>Popularity : {{ movieDetails.popularity }}</li>
+          <li>Vote : {{ movieDetails.vote_average }}/10</li>
+          <li>Vote count : {{ movieDetails.vote_count }}</li>
+        </ul>
       </article>
+    </div>
+    <div class="row">
+      <button class="col">Add to favorite</button>
+      <button class="col">Add to watch</button>
     </div>
   </section>
 </template>
@@ -42,16 +57,16 @@ export default {
       return this.$store.state.movieTrailer;
     },
   },
-  // filters: {
-  //   toDate: function (value) {
-  //     let date = new Date(value)
-  //     value.toLocaleDateString("fr-FR", {
-  //       year: "numeric",
-  //       month: "long",
-  //       day: "numeric",
-  //     });
-  //   },
-  // },
+  filters: {
+    toDate: function (value) {
+      let date = new Date(value);
+      return date.toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
+  },
   methods: {
     imgURL: function (value) {
       if (value) {
@@ -76,5 +91,13 @@ export default {
 }
 article {
   color: white;
+}
+img {
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
+}
+article {
+  text-align: left;
 }
 </style>

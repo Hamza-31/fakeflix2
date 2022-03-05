@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>MoviDetails</h1>
     <!-- <div>film {{ $route.params.id }}</div> -->
     <MovieDetails />
   </div>
