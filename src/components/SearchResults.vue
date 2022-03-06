@@ -4,8 +4,12 @@
       <h3 v-if="searchQuery">
         Results for : <b>{{ searchQuery }}</b>
       </h3>
-      <div class="col" v-for="movie of searchResults" v-bind:key="movie.id">
-        <router-link :to="'/movie/' + movie.id">
+      <div
+        class="col py-2"
+        v-for="movie of searchResults"
+        v-bind:key="movie.id"
+      >
+        <router-link :to="`/movie/${movie.id}`">
           <figure @click="getData(movie.id)">
             <img :src="imgURL(movie.poster_path)" />
             <figcaption>{{ movie.title }}</figcaption>
@@ -36,13 +40,10 @@ export default {
       }
     },
     getData: function (id) {
-      console.log(id);
       this.$store.commit("setMovieId", id);
       this.$store.commit("setMovieTrailer", id);
       this.$store.dispatch("fetchMovie");
       this.$store.dispatch("fetchTrailer");
-      console.log(this.$store.state.searchResults.length);
-      //   console.log(this.$store.state);
     },
     isResults: function () {
       return this.$store.state.searchResults.length === 0 &&
@@ -55,7 +56,7 @@ export default {
 </script>
 <style scoped>
 #results-container {
-  width: 1000px;
+  width: 800px;
   margin: 0 auto;
   padding-top: 40px;
 }
@@ -63,6 +64,10 @@ img {
   width: 200px;
   height: 300px;
   object-fit: cover;
+  margin-bottom: 10px;
+}
+figure {
+  width: 220px;
 }
 a {
   text-decoration: none;
@@ -70,5 +75,6 @@ a {
 }
 a:hover {
   text-decoration: underline;
+  color: white;
 }
 </style>

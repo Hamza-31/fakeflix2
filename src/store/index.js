@@ -2,17 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-// Vue.use(BootstrapVue)
+
 
 export default new Vuex.Store({
     state: {
-        searchQuery: null,
+        searchQuery: '',
         searchResults: [],
         movieID: 0,
         movieTrailer: [],
         movieDetails: [],
         API_key: '338e64b8114d773d6a8d1dc0fb956525',
-        latestMovies: []
+        topRatedMovies: []
     },
     getters: {},
     mutations: {
@@ -31,14 +31,15 @@ export default new Vuex.Store({
         setMovieTrailer: function (state, trailer) {
             state.movieTrailer = trailer
         },
-        setLatestMovies: function (state, listMovies) {
-            state.latestMovies = listMovies
+        setTopRatedMovies: function (state, results) {
+            state.topRatedMovies = results
 
         }
     },
     actions: {
         fetchMovies: function (context) {
-            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${context.state.API_key}&query=${context.state.searchQuery}`)
+            let query = context.state.searchQuery.split(' ').join('+');
+            fetch(`https://api.themoviedb.org/3/search/movie?api_key=${context.state.API_key}&query=${query}`)
                 .then(response => response.json())
                 .then(movies => {
                     this.commit('setSearchResults', movies.results);
@@ -60,11 +61,11 @@ export default new Vuex.Store({
                     this.commit('setMovieTrailer', trailer);
                 })
         },
-        fetchLatestMovies: function (context) {
-            fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${context.state.API_key}&language=en-US`)
+        fetchTopRatedMovies: function (context) {
+            fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${context.state.API_key}&language=en-US`)
                 .then(response => response.json())
                 .then(latestMovies => {
-                    this.commit('setLatestMovies', latestMovies);
+                    this.commit('setTopRatedMovies', latestMovies.results.filter(movie => movie.original_language === 'en').slice(0, 10));
                 })
         }
     },

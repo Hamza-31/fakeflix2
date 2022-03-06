@@ -7,13 +7,15 @@
 
 <script>
 import MovieDetails from "@/components/MovieDetails.vue";
+import { mapState } from "vuex";
 export default {
   name: "movie-details",
   components: {
     MovieDetails,
   },
+  computed: mapState(["movieId"]),
   // created: function () {
-  //   this.$store.commit("setMovieId", $route.params.id);
+  //   this.$store.commit("setMovieId", this.$route.params.id);
   // },
 };
 </script>

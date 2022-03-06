@@ -6,7 +6,8 @@
     <header>
       <nav>
         <router-link to="/">Home</router-link> |
-        <router-link to="/my-favorite">Favorite</router-link>
+        <router-link to="/my-favorite">Favorite</router-link> |
+        <router-link to="/watch-list">Watch List</router-link>
       </nav>
       <nav><MainHeader /></nav>
     </header>
@@ -41,8 +42,8 @@ header {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  background-color: #0c0c0c;
+  color: #42b983;
+  background-color: #000000;
 }
 .logo {
   padding-top: 20px;
@@ -50,6 +51,11 @@ header {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  text-decoration: none;
+}
+nav a:hover {
+  font-weight: bold;
+  color: #42b983;
 }
 
 nav a.router-link-exact-active {

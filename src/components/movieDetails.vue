@@ -3,9 +3,10 @@
     <div class="row py-4">
       <div class="col">
         <iframe
+          v-if="movieTrailer.results !== 0 ? true : false"
           width="1000"
           height="315"
-          :src="trailerURL(trailer.results[0].key)"
+          :src="trailerURL(movieTrailer.results[0].key)"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -45,22 +46,14 @@
 </template>
 
 <script>
-// import { mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "MovieDetails",
-  computed: {
-    movieDetails() {
-      return this.$store.state.movieDetails;
-    },
-    trailer() {
-      console.log(this.$store.state.movieTrailer);
-      return this.$store.state.movieTrailer;
-    },
-  },
+  computed: mapState(["movieDetails", "movieTrailer"]),
   filters: {
     toDate: function (value) {
       let date = new Date(value);
-      return date.toLocaleDateString("fr-FR", {
+      return date.toLocaleDateString("en-EN", {
         year: "numeric",
         month: "long",
         day: "numeric",
