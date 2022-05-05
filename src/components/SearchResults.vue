@@ -42,8 +42,10 @@ export default {
     getData: function (id) {
       this.$store.commit("setMovieId", id);
       this.$store.commit("setMovieTrailer", id);
+      this.$store.commit("setMovieReviews", id);
       this.$store.dispatch("fetchMovie");
       this.$store.dispatch("fetchTrailer");
+      this.$store.dispatch("fetchReviews");
     },
     isResults: function () {
       return this.$store.state.searchResults.length === 0 &&
@@ -59,6 +61,10 @@ export default {
   width: 800px;
   margin: 0 auto;
   padding-top: 40px;
+  z-index: 10;
+}
+h3 {
+  margin-bottom: 40px;
 }
 img {
   width: 200px;
@@ -69,12 +75,20 @@ img {
 figure {
   width: 220px;
 }
+figure:hover {
+  transform: scale(1.1);
+  /* box-shadow: inset 0px 200px 200px 200px rgba(66, 185, 131, 0.2); */
+  /* box-shadow: 0px 200px 200px 200px rgba(66, 185, 131, 0.2); */
+  filter: drop-shadow(0px 0px 2000px rgba(66, 185, 131, 0.2));
+  transition: 0.2s ease-out;
+}
 a {
   text-decoration: none;
   color: white;
+  font-weight: bold;
 }
 a:hover {
   text-decoration: underline;
-  color: white;
+  color: #42b983;
 }
 </style>

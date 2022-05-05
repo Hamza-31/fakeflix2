@@ -66,7 +66,7 @@ export default {
   min-height: 250px;
   margin: 0 auto;
   overflow: visible;
-  background-color: #030202;
+  background-color: #000000;
 }
 figure {
   min-height: 250px;
@@ -82,6 +82,6 @@ a {
 }
 a:hover {
   text-decoration: underline;
-  color: white;
+  color: rgb(66, 185, 131);
 }
 </style>

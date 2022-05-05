@@ -1,7 +1,12 @@
 <template>
   <div class="hello">
     <nav>
-      <input id="input" type="text" @keyup.enter="getData()" />
+      <input
+        id="input"
+        placeholder="Search..."
+        type="text"
+        @keyup.enter="getData()"
+      />
     </nav>
   </div>
 </template>
@@ -57,6 +62,13 @@ nav {
 input {
   display: block;
   padding: 10px;
-  outline: solid #48c0c3;
+  outline: solid rgb(66, 185, 131);
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  color: rgb(66, 185, 131);
+}
+input:focus {
+  background-color: rgba(255, 255, 255);
+  color: black;
 }
 </style>

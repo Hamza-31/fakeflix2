@@ -9,10 +9,12 @@ export default new Vuex.Store({
         searchQuery: '',
         searchResults: [],
         movieID: 0,
-        movieTrailer: [],
         movieDetails: [],
+        movieTrailer: [],
+        movieReviews: [],
         API_key: '338e64b8114d773d6a8d1dc0fb956525',
-        topRatedMovies: []
+        topRatedMovies: [],
+        tokenRequest: []
     },
     getters: {},
     mutations: {
@@ -31,9 +33,14 @@ export default new Vuex.Store({
         setMovieTrailer: function (state, trailer) {
             state.movieTrailer = trailer
         },
+        setMovieReviews: function (state, reviews) {
+            state.movieReviews = reviews
+        },
         setTopRatedMovies: function (state, results) {
             state.topRatedMovies = results
-
+        },
+        setTokkenRequest: function (state, token) {
+            state.tokenRequest = token
         }
     },
     actions: {
@@ -46,8 +53,6 @@ export default new Vuex.Store({
                 })
         },
         fetchMovie: function (context) {
-
-
             fetch(`https://api.themoviedb.org/3/movie/${context.state.movieID}?api_key=${context.state.API_key}&language=en-US`)
                 .then(response => response.json())
                 .then(movie => {
@@ -61,11 +66,27 @@ export default new Vuex.Store({
                     this.commit('setMovieTrailer', trailer);
                 })
         },
+        fetchReviews: function (context) {
+            fetch(`https://api.themoviedb.org/3/movie/${context.state.movieID}/reviews?api_key=${context.state.API_key}&language=en-US&page=1`)
+                .then(response => response.json())
+                .then(reviews => {
+                    console.log(reviews)
+                    this.commit('setMovieReviews', reviews);
+                })
+        },
         fetchTopRatedMovies: function (context) {
             fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${context.state.API_key}&language=en-US`)
                 .then(response => response.json())
                 .then(latestMovies => {
                     this.commit('setTopRatedMovies', latestMovies.results.filter(movie => movie.original_language === 'en').slice(0, 10));
+                })
+        },
+        fetchRequestToken: function (context) {
+            fetch(`https://api.themoviedb.org/3/authentication/token/new?api_key=${context.state.API_key}`)
+                .then(response => response.json())
+                .then(token => {
+                    console.log(token)
+                    this.commit('setTokkenRequest', token);
                 })
         }
     },

@@ -17,10 +17,19 @@ export default {
     SearchResults,
     TopRatedMovies,
   },
+  methods: {
+    getData: function () {
+      this.$store.commit("setTokkenRequest");
+      this.$store.dispatch("fetchRequestToken");
+    },
+  },
 };
 </script>
 
 <style scoped>
+button {
+  background-color: red;
+}
 .home-container {
   width: 1000px;
   margin: 0 auto;
